@@ -50,7 +50,7 @@ INSERT INTO Orders(ord_no, purch_amt, ord_date, customer_id, Salesman_id) VALUES
 ("70007", "948.5", "2012-09-10", "3005", "5005"),
 ("70005", "2400.6", "2012-07-27", "3007", "5006");
 
-SELECT customer.cust_name, salesman.name, salesman.city
+SELECT Customer.cust_name, Salesman.name, Salesman.city
 FROM Customer
 JOIN Salesman ON Customer.city = Salesman.city;
 
@@ -58,7 +58,7 @@ SELECT Customer.cust_name, Salesman.name
 FROM Customer
 JOIN Salesman ON Customer.Salesman_id = Salesman.Salesman_id;
 
-SELECT Order.ord_no, Customer.cust_name, Orders.customer_id, Orders.Salesman_id
+SELECT Orders.ord_no, Customer.cust_name, Orders.customer_id, Orders.Salesman_id
 FROM Orders
 JOIN Customer ON Orders.customer_id = Customer.customer_id
 JOIN Salesman ON Orders.Salesman_id = Salesman.Salesman_id
@@ -76,3 +76,15 @@ Salesman.name AS "Salesman",
 Salesman.commission
 FROM Customer JOIN Salesman ON Customer.Salesman_id = Salesman.Salesman_id
 WHERE Salesman.commission BETWEEN 0.12 AND 0.14;
+
+SELECT Orders.ord_no, Customer.cust_name, Salesman.commission AS "Commission%",
+Orders.purch_amt * Salesman.commission AS "Commission"
+FROM Orders
+JOIN Salesman ON Orders.Salesman_id = Salesman.Salesman_id
+JOIN Customer ON Orders.customer_id = Customer.customer_id
+WHERE Customer.grade >= 200;
+
+SELECT *
+FROM Customer
+JOIN Orders ON Customer.customer_id = Orders.customer_id
+WHERE Orders.ord_date = '2012-10-05';
